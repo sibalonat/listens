@@ -1,100 +1,85 @@
 <template>
-  <app-layout>
-    <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">Skills</h2>
-    </template>
-    <div class="py-12">
-      <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
-        <jet-button
-          class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500"
-          @click="acting = true"
-        >
-          Add new +
-        </jet-button>
+    <app-layout>
+        <template #header>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">Skills</h2>
+        </template>
+        <div class="py-12">
+            <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
+                <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500"
+                    @click="acting = true">
+                    Add new +
+                </jet-button>
 
-        <!-- //modal  -->
-        <jet-modal :show="acting" closeable="true" @close="acting = null">
-          <!-- <div class="p-8 shadow-2xl bg-gray-50"> -->
-          <div class="p-8 shadow-2xl bg-gray-50">
-            <p class="text-2xl font-extrabold text-center text-gray-600">
-              Let me know some details
-            </p>
-            <form
-              class="flex flex-col items-center p-16"
-              @submit.prevent="submit"
-            >
-              <jet-input
-                class="px-5 py-3 border border-gray-600 rounded w-96"
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                v-model="form.email"
-              ></jet-input>
-              <jet-input-error :message="form.errors.email" />
-              <textarea
-                name="message"
-                class="px-5 py-3 mt-5 border border-gray-600 rounded w-96"
-                placeholder="The details"
-                v-model="form.message"
-              ></textarea>
-              <jet-input-error :message="form.errors.message" />
-              <jet-button
-                :disabled="form.processing"
-                class="justify-center px-5 py-3 mt-5 text-sm bg-purple-400 w-96 rounded-xl"
-              >
-                <span class="mr-1 animate-spin" v-show="form.processing">
-                  &#9696;
-                </span>
-                <span v-show="!form.processing">Get in Touch</span>
-              </jet-button>
-            </form>
-          </div>
-          <!-- </div> -->
-        </jet-modal>
+                <!-- //modal  -->
+                <jet-modal :show="acting" closeable="true" @close="acting = null">
+                    <!-- <div class="p-8 shadow-2xl bg-gray-50"> -->
+                    <div class="p-8 shadow-2xl bg-gray-50">
+                        <p class="text-2xl font-extrabold text-center text-gray-600">
+                            Let me know some details
+                        </p>
+                        <form class="flex flex-col items-center p-16" @submit.prevent="submit">
+                            <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
+                                placeholder="Your Skill" v-model="form.name"></jet-input>
+                            <jet-input-error :message="form.errors.name" />
+                            <!-- <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
+                                placeholder="Your Skill" v-model="form.name"></jet-input> -->
+                            <select
+                            class="w-96 border border-gray-600 rounded mt-5"
+                            v-model="form.color">
+                                <option value="">select a color</option>
+                                <option v-for="color in availableColors" :key="color" :value="color"> {{ color }} </option>
+                            </select>
+                            <jet-input-error :message="form.errors.email" />
 
-        <br />
-        <table v-if="skills.length > 0" class="w-full text-left">
-          <thead class="text-indigo-600 border border-b-2 border-gray-300">
-            <tr>
-              <th class="px-6 py-3 text-left">Name</th>
-              <th class="px-6 py-3 text-left">Color</th>
-              <th class="px-6 py-3 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody v-for="skill in skills" :key="skill.id">
-            <tr class="text-sm text-indigo-900 border-b border-gray-400">
-              <td class="px-6 py-4">
-                {{ skill.name }}
-              </td>
-              <td class="px-6 py-4">
-                <p>
-                  <span class="p-4 mr-5 rounded" :class="skill.color"></span>
-                  {{ skill.color }}
-                </p>
-                <!-- {{ skill.name }} -->
-              </td>
-              <td class="px-6 py-4">
-                <jet-button
-                  class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
-                  >Edit</jet-button
-                >
-                <jet-button
-                  class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
-                  >Delete</jet-button
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div
-          v-else
-          class="p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg"
-        >
-          You have not created any skills yet
+                            <jet-button :disabled="form.processing"
+                                class="justify-center px-5 py-3 mt-5 text-sm bg-purple-400 w-96 rounded-xl">
+                                <span class="mr-1 animate-spin" v-show="form.processing">
+                                    &#9696;
+                                </span>
+                                <span v-show="!form.processing">Submit</span>
+                            </jet-button>
+                        </form>
+                    </div>
+                    <!-- </div> -->
+                </jet-modal>
+
+                <br />
+                <table v-if="skills.length > 0" class="w-full text-left">
+                    <thead class="text-indigo-600 border border-b-2 border-gray-300">
+                        <tr>
+                            <th class="px-6 py-3 text-left">Name</th>
+                            <th class="px-6 py-3 text-left">Color</th>
+                            <th class="px-6 py-3 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="skill in skills" :key="skill.id">
+                        <tr class="text-sm text-indigo-900 border-b border-gray-400">
+                            <td class="px-6 py-4">
+                                {{ skill.name }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <p>
+                                    <span class="p-4 mr-5 rounded" :class="skill.color"></span>
+                                    {{ skill.color }}
+                                </p>
+                                <!-- {{ skill.name }} -->
+                            </td>
+                            <td class="px-6 py-4">
+                                <jet-button
+                                    class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100">
+                                    Edit</jet-button>
+                                <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100">
+                                    Delete</jet-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div v-else class="p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg">
+                    You have not created any skills yet
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </app-layout>
+    </app-layout>
 </template>
 
 <script>
@@ -104,30 +89,37 @@ import JetModal from "@/Jetstream/Modal";
 import JetInput from "@/Jetstream/Input";
 import JetInputError from "@/Jetstream/InputError";
 export default {
-  components: {
-    JetButton,
-    AppLayout,
-    JetModal,
-    JetInput,
-    JetInputError
-  },
-  props: {
-    skills: Object,
-  },
-  methods: {
-    submit() {
-      this.form.post(route("skills.store"));
+    components: {
+        JetButton,
+        AppLayout,
+        JetModal,
+        JetInput,
+        JetInputError
     },
-  },
-  data() {
-    return {
-      acting: null,
-      form: this.$inertia.form({
-        name: "",
-        color: "",
-      }),
-    };
-  },
+    props: {
+        skills: Object,
+        availableColors: Object
+    },
+    methods: {
+        submit() {
+            this.form.submit('post', route("skills.store"), {
+                onSuccess: () => {
+                    this.form.reset('name'),
+                    this.form.reset('color'),
+                    this.acting = null,
+                }
+            });
+        },
+    },
+    data() {
+        return {
+            acting: null,
+            form: this.$inertia.form({
+                name: "",
+                color: "",
+            }),
+        };
+    },
 };
 </script>
 
