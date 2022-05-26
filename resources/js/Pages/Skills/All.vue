@@ -71,7 +71,7 @@
                                     @click="
                                         acting = true;
                                         method = 'put';
-                                        action = route('skills.update', [skill.id])
+                                        action = route('skills.update', [skill.id]);
                                         form.name = skill.name;
                                         form.color = skill.color;
                                     ">
