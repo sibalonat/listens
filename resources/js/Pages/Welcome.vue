@@ -6,7 +6,8 @@
             <jet-application-mark class="w-auto h-12"></jet-application-mark>
         </div>
         <div v-if="canLogin">
-            <button @click="$refs.skulls.$el.scrollIntoView({ behavior: 'smooth' })" class="text-base underline">Skills</button>
+            <button @click="$refs.skulls.$el.scrollIntoView({ behavior: 'smooth' })"
+                class="text-base underline">Skills</button>
             <Link v-if="$page.props.user" :href="route('dashboard')" class="text-sm-underline">Dashboard</Link>
 
 
@@ -23,8 +24,9 @@
         <!-- first section -->
         <Section class="h-screen pt-16 bg-gray-800">
             <div class="flex flex-wrap content-between h-2/3 pb-36">
-                <p class="w-full pb-3 font-bold text-gray-300 uppercase border-b-2 border-gray-400 text-9xl">
-                    Digital Eco
+                <p class="w-full pb-3 font-bold text-gray-300 uppercase border-b-2 border-gray-400 text-9xl ml15">
+                    <span class="word">Digital</span>
+                    <span class="word">Eco</span>
                 </p>
                 <div class="flex items-end pb-2 border-b-2 border-gray-500">
                     <p class="mr-5 text-xl font-bold text-gray-500">Want to know more</p>
@@ -150,6 +152,10 @@ export default defineComponent({
         skills: Object,
         projects: Object,
     },
+    // mounted() {
+    //     // console.log('mounted!')
+
+    // },
     methods: {
         componentName(index) {
             return defineAsyncComponent(() =>
@@ -157,6 +163,16 @@ export default defineComponent({
                     "@heroicons/vue/solid/" + this.projects[index].icon_name + "Icon.js"
                 )
             );
+        },
+        animate: function() {
+            console.log("Here");
+            anime({
+                targets: '.bar2',
+                duration: 1500,
+                // easing: 'easeInSine',
+                elasticity: 400,
+                width: this.width
+            });
         },
         submit() {
             this.form.post(route("contact"));
@@ -178,4 +194,15 @@ export default defineComponent({
 
 
 
+.ml15 {
+  font-weight: 800;
+  font-size: 3.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+}
+
+.ml15 .word {
+  display: inline-block;
+  line-height: 1em;
+}
 </style>
