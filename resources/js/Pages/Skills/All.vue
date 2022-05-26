@@ -21,10 +21,8 @@
                             <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
                                 placeholder="Your Skill" v-model="form.name"></jet-input>
                             <jet-input-error :message="form.errors.name" />
-                            <!-- <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
-                                placeholder="Your Skill" v-model="form.name"></jet-input> -->
                             <select
-                            class="w-96 border border-gray-600 rounded mt-5"
+                            class="mt-5 border border-gray-600 rounded w-96"
                             v-model="form.color">
                                 <option value="">select a color</option>
                                 <option v-for="color in availableColors" :key="color" :value="color"> {{ color }} </option>
@@ -104,10 +102,10 @@ export default {
         submit() {
             this.form.submit('post', route("skills.store"), {
                 onSuccess: () => {
-                    this.form.reset('name'),
-                    this.form.reset('color'),
-                    this.acting = null,
-                }
+                    this.form.reset('name');
+                    this.form.reset('color');
+                    this.acting = null;
+                },
             });
         },
     },
@@ -118,7 +116,7 @@ export default {
                 name: "",
                 color: "",
             }),
-        };
+        }
     },
 };
 </script>
