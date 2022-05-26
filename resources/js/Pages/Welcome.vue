@@ -24,9 +24,9 @@
         <!-- first section -->
         <Section class="h-screen pt-16 bg-gray-800">
             <div class="flex flex-wrap content-between h-2/3 pb-36">
-                <p class="w-full pb-3 font-bold text-gray-300 uppercase border-b-2 border-gray-400 text-9xl ml15">
-                    <span class="word">Digital</span>
-                    <span class="word">Eco</span>
+                <p class="w-full pb-3 font-bold text-gray-300 uppercase border-b-2 border-gray-400 ml15">
+                    <span class="text-6xl word wrd1">Digital</span>
+                    <span class="word text-9xl wrd2">Eco</span>
                 </p>
                 <div class="flex items-end pb-2 border-b-2 border-gray-500">
                     <p class="mr-5 text-xl font-bold text-gray-500">Want to know more</p>
@@ -192,7 +192,15 @@ export default defineComponent({
 
 <style scoped>
 
+.wrd1 {
+    /* font-family: 'Xanh Mono', monospace; */
+    font-family: 'Barrio', cursive;
 
+}
+.wrd1 {
+    font-family: 'Xanh Mono', monospace;
+    /* font-family: 'Barrio', cursive; */
+}
 
 .ml15 {
   font-weight: 800;

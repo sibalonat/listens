@@ -28,6 +28,7 @@
     "dependencies": {
         "@heroicons/vue": "^1.0.6",
         "animate.css": "^4.1.1",
+        "animejs": "^3.2.1",
         "vue-animate-onscroll": "^1.0.8"
     }
 }
