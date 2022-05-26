@@ -24449,7 +24449,7 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      this.form.submit('post', route("projects.store"), {
+      this.form.submit(this.method, this.action, {
         onSuccess: function onSuccess() {
           _this2.form.reset('title');
 
@@ -24467,6 +24467,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       acting: null,
+      method: null,
+      action: null,
       form: this.$inertia.form({
         title: "",
         description: "",
@@ -24516,7 +24518,7 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      this.form.submit('post', route("skills.store"), {
+      this.form.submit(this.method, this.action, {
         onSuccess: function onSuccess() {
           _this.form.reset('name');
 
@@ -24530,6 +24532,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       acting: null,
+      method: null,
+      action: null,
       form: this.$inertia.form({
         name: "",
         color: ""
@@ -29064,7 +29068,7 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_22 = {
   key: 1,
-  "class": "p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg"
+  "class": "p-3 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg mt-5"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
@@ -29085,7 +29089,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
         "class": "p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500",
         onClick: _cache[0] || (_cache[0] = function ($event) {
-          return $data.acting = true;
+          $data.acting = true;
+          $data.method = 'post';
+          $data.action = _ctx.route('projects.store');
         })
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -29217,24 +29223,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.color), 3
         /* TEXT, CLASS */
         )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{ skill.name }} ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-          "class": "mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
+          "class": "mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100",
+          onClick: function onClick($event) {
+            $data.acting = true;
+            $data.method = 'put';
+            $data.action = _ctx.route('projects.update', [project.id]);
+            $data.form.title = project.title;
+            $data.form.description = project.description;
+            $data.form.color = project.color;
+            $data.form.icon_name = project.icon_name;
+          }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [_hoisted_20];
           }),
-          _: 1
-          /* STABLE */
+          _: 2
+          /* DYNAMIC */
 
-        }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-          "class": "mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+          "class": "mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100",
+          onClick: function onClick($event) {
+            $data.method = 'delete';
+            $data.action = _ctx.route('projects.destroy', [project.id]);
+            $options.submit();
+          }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [_hoisted_21];
           }),
-          _: 1
-          /* STABLE */
+          _: 2
+          /* DYNAMIC */
 
-        })])])]);
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["onClick"])])])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, " You have not created any projects yet "))])])];
@@ -29337,7 +29361,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_19 = {
   key: 1,
-  "class": "p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg"
+  "class": "p-3 mt-5 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
@@ -29358,7 +29382,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
         "class": "p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500",
         onClick: _cache[0] || (_cache[0] = function ($event) {
-          return $data.acting = true;
+          $data.acting = true;
+          $data.method = 'post';
+          $data.action = _ctx.route('skills.store');
         })
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -29452,24 +29478,40 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(skill.color), 1
         /* TEXT */
         )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{ skill.name }} ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-          "class": "mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
+          "class": "mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100",
+          onClick: function onClick($event) {
+            $data.acting = true;
+            $data.method = 'put';
+            $data.action = _ctx.route('skills.update', [skill.id]);
+            $data.form.name = skill.name;
+            $data.form.color = skill.color;
+          }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [_hoisted_17];
           }),
-          _: 1
-          /* STABLE */
+          _: 2
+          /* DYNAMIC */
 
-        }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
-          "class": "mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+          "class": "mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100",
+          onClick: function onClick($event) {
+            $data.method = 'delete';
+            $data.action = _ctx.route('skills.destroy', [skill, _ctx.id]);
+            $options.submit();
+          }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [_hoisted_18];
           }),
-          _: 1
-          /* STABLE */
+          _: 2
+          /* DYNAMIC */
 
-        })])])]);
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["onClick"])])])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, " You have not created any skills yet "))])])];

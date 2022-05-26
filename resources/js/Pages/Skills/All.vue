@@ -6,7 +6,11 @@
         <div class="py-12">
             <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
                 <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500"
-                    @click="acting = true">
+                    @click="
+                            acting = true;
+                            method = 'post';
+                            action = route('skills.store');
+                        ">
                     Add new +
                 </jet-button>
 
@@ -21,11 +25,10 @@
                             <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
                                 placeholder="Your Skill" v-model="form.name"></jet-input>
                             <jet-input-error :message="form.errors.name" />
-                            <select
-                            class="mt-5 border border-gray-600 rounded w-96"
-                            v-model="form.color">
+                            <select class="mt-5 border border-gray-600 rounded w-96" v-model="form.color">
                                 <option value="">select a color</option>
-                                <option v-for="color in availableColors" :key="color" :value="color"> {{ color }} </option>
+                                <option v-for="color in availableColors" :key="color" :value="color"> {{ color }}
+                                </option>
                             </select>
                             <jet-input-error :message="form.errors.email" />
 
@@ -64,15 +67,27 @@
                             </td>
                             <td class="px-6 py-4">
                                 <jet-button
-                                    class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100">
+                                    class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
+                                    @click="
+                                        acting = true;
+                                        method = 'put';
+                                        action = route('skills.update', [skill.id])
+                                        form.name = skill.name;
+                                        form.color = skill.color;
+                                    ">
                                     Edit</jet-button>
-                                <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100">
+                                <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
+                                @click="
+                                    method = 'delete';
+                                    action = route('skills.destroy', [skill,id]);
+                                    submit();
+                                ">
                                     Delete</jet-button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div v-else class="p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg">
+                <div v-else class="p-3 mt-5 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg">
                     You have not created any skills yet
                 </div>
             </div>
@@ -100,7 +115,7 @@ export default {
     },
     methods: {
         submit() {
-            this.form.submit('post', route("skills.store"), {
+            this.form.submit(this.method, this.action, {
                 onSuccess: () => {
                     this.form.reset('name');
                     this.form.reset('color');
@@ -112,6 +127,8 @@ export default {
     data() {
         return {
             acting: null,
+            method: null,
+            action: null,
             form: this.$inertia.form({
                 name: "",
                 color: "",

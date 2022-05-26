@@ -5,8 +5,11 @@
         </template>
         <div class="py-12">
             <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
-                <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500"
-                    @click="acting = true">
+                <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500" @click="
+    acting = true;
+method = 'post';
+action = route('projects.store');
+                ">
                     Add new +
                 </jet-button>
 
@@ -19,8 +22,8 @@
                         </p>
                         <form class="flex flex-col items-center p-16" @submit.prevent="submit">
                             <!-- //title -->
-                            <jet-input class="px-5 py-3 mb-3 border border-gray-600 rounded w-96" type="text" name="title"
-                                placeholder="Name of the project" v-model="form.title"></jet-input>
+                            <jet-input class="px-5 py-3 mb-3 border border-gray-600 rounded w-96" type="text"
+                                name="title" placeholder="Name of the project" v-model="form.title"></jet-input>
                             <jet-input-error :message="form.errors.title" />
 
                             <!-- //description -->
@@ -89,15 +92,29 @@
                             </td>
                             <td class="px-6 py-4">
                                 <jet-button
-                                    class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100">
+                                    class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
+                                    @click="
+                                        acting = true;
+                                        method = 'put';
+                                        action = route('projects.update', [project.id])
+                                        form.title = project.title;
+                                        form.description = project.description;
+                                        form.color = project.color;
+                                        form.icon_name = project.icon_name;
+                                    ">
                                     Edit</jet-button>
-                                <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100">
+                                <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
+                                @click="
+                                    method = 'delete';
+                                    action = route('projects.destroy', [project.id]);
+                                    submit();
+                                ">
                                     Delete</jet-button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div v-else class="p-3 text-red-800 bg-red-100 border border-red-400 rounded-lg">
+                <div v-else class="p-3 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg mt-5">
                     You have not created any projects yet
                 </div>
             </div>
@@ -136,7 +153,7 @@ export default {
             );
         },
         submit() {
-            this.form.submit('post', route("projects.store"), {
+            this.form.submit(this.method, this.action, {
                 onSuccess: () => {
                     this.form.reset('title');
                     this.form.reset('description');
@@ -150,6 +167,8 @@ export default {
     data() {
         return {
             acting: null,
+            method: null,
+            action: null,
             form: this.$inertia.form({
                 title: "",
                 description: "",
