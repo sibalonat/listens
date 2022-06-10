@@ -13,7 +13,6 @@ class ProjectController extends Controller
     {
         return Inertia::render('Projects/All', [
             'projects' => Project::all(),
-            'availableIcons' => Project::getAvailableIcons(),
             'availableColor' => Project::getAvailableTextColors(),
         ]);
     }
@@ -28,19 +27,17 @@ class ProjectController extends Controller
             ],
             'description' => [
                 'required',
-                'max:255',
             ],
             'color' => [
                 'required',
                 'in:' . implode(',', Project::getAvailableTextColors())
-            ],
-            'icon_name' => [
-                'required',
-                'in:' . implode(',', Project::getAvailableIcons())
-            ],
+            ]
         ]);
 
-        Project::create($request->all());
+
+        $project = Project::create($request->all());
+        $project->addMediaFromRequest('feature_image')
+        ->toMediaCollection('service');
 
         return redirect()->route('projects.index');
     }
@@ -55,16 +52,11 @@ class ProjectController extends Controller
             ],
             'description' => [
                 'required',
-                'max:255',
             ],
             'color' => [
                 'required',
                 'in:' . implode(',', Project::getAvailableTextColors())
-            ],
-            'icon_name' => [
-                'required',
-                'in:' . implode(',', Project::getAvailableIcons())
-            ],
+            ]
         ]);
 
         $project->update($request->all());

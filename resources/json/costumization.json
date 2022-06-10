@@ -11,11 +11,13 @@
     "backgrounds": [
         "bg-indigo-500",
         "bg-green-500",
+        "bg-emerald-600",
         "bg-yellow-500",
         "bg-blue-500",
         "bg-pink-500",
         "bg-red-500",
-        "bg-purple-500"
+        "bg-purple-500",
+        "bg-purple-400"
     ],
     "icons": [
         "AcademicCap",
@@ -27,6 +29,11 @@
         "CurrencyDollar",
         "Database",
         "LockClosed",
-        "Terminal"
+        "Terminal",
+        "DeviceMobile",
+        "Beaker",
+        "GlobeAlt",
+        "Support",
+        "Template"
     ]
 }

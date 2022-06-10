@@ -5,12 +5,12 @@
         </template>
         <div class="py-12">
             <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
-                <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500"
-                    @click="
-                            acting = true;
-                            method = 'post';
-                            action = route('skills.store');
-                        ">
+                <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500" @click="
+                    acting = true;
+                    inputet = true;
+                    method = 'post';
+                    action = route('skills.store');
+                    ">
                     Add new +
                 </jet-button>
 
@@ -21,7 +21,10 @@
                         <p class="text-2xl font-extrabold text-center text-gray-600">
                             Let me know some details
                         </p>
-                        <form class="flex flex-col items-center p-16" @submit.prevent="submit">
+                        <form
+                        class="flex flex-col items-center p-16"
+                        @submit.prevent="submit"
+                        enctype="multipart/form-data">
                             <jet-input class="px-5 py-3 border border-gray-600 rounded w-96" type="text" name="name"
                                 placeholder="Your Skill" v-model="form.name"></jet-input>
                             <jet-input-error :message="form.errors.name" />
@@ -31,6 +34,8 @@
                                 </option>
                             </select>
                             <jet-input-error :message="form.errors.email" />
+
+                            <input type="file" v-show="inputet" name="feature_image" class="form-control" v-on:change="onChange" ref="photo" />
 
                             <jet-button :disabled="form.processing"
                                 class="justify-center px-5 py-3 mt-5 text-sm bg-purple-400 w-96 rounded-xl">
@@ -50,6 +55,7 @@
                         <tr>
                             <th class="px-6 py-3 text-left">Name</th>
                             <th class="px-6 py-3 text-left">Color</th>
+                            <th class="px-6 py-3 text-left">image</th>
                             <th class="px-6 py-3 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -65,23 +71,27 @@
                                 </p>
                                 <!-- {{ skill.name }} -->
                             </td>
+                            <td class="px-6 py-4 w-52">
+                                <img :src="skill.url" class="object-scale-down" alt="img-ofservice">
+                            </td>
                             <td class="px-6 py-4">
                                 <jet-button
                                     class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
                                     @click="
-                                        acting = true;
-                                        method = 'put';
-                                        action = route('skills.update', [skill.id]);
-                                        form.name = skill.name;
-                                        form.color = skill.color;
+                                    acting = true;
+                                    inputet = false;
+                                    method = 'put';
+                                    action = route('skills.update', [skill.id]);
+                                    form.name = skill.name;
+                                    form.color = skill.color;
                                     ">
                                     Edit</jet-button>
                                 <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
-                                @click="
+                                    @click="
                                     method = 'delete';
-                                    action = route('skills.destroy', [skill,id]);
+                                    action = route('skills.destroy', [skill, id]);
                                     submit();
-                                ">
+                                    ">
                                     Delete</jet-button>
                             </td>
                         </tr>
@@ -114,24 +124,35 @@ export default {
         availableColors: Object
     },
     methods: {
+        onChange(e) {
+            const file = e.target.files[0];
+
+            this.form.feature_image = file;
+
+            // console.log(this.inputet);
+        },
         submit() {
             this.form.submit(this.method, this.action, {
                 onSuccess: () => {
                     this.form.reset('name');
                     this.form.reset('color');
+                    this.form.reset('feature_image');
                     this.acting = null;
+                    this.inputet = null;
                 },
             });
         },
     },
     data() {
         return {
+            inputet: null,
             acting: null,
             method: null,
             action: null,
             form: this.$inertia.form({
                 name: "",
                 color: "",
+                feature_image: "",
             }),
         }
     },

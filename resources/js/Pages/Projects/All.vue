@@ -6,9 +6,10 @@
         <div class="py-12">
             <div class="mx-auto text-right max-w-7xl sm:px-6 lg:px-8">
                 <jet-button class="p-3 mb-4 text-gray-800 border border-blue-400 bg-blue-50 hover:bg-blue-500" @click="
-    acting = true;
-method = 'post';
-action = route('projects.store');
+                acting = true;
+                inputet = true;
+                method = 'post';
+                action = route('projects.store');
                 ">
                     Add new +
                 </jet-button>
@@ -32,12 +33,12 @@ action = route('projects.store');
                             </textarea>
                             <jet-input-error :message="form.errors.description" />
                             <!-- //icons -->
-                            <select class="mt-5 border border-gray-600 rounded w-96" v-model="form.icon_name">
+                            <!-- <select class="mt-5 border border-gray-600 rounded w-96" v-model="form.icon_name">
                                 <option value="">select a icon</option>
                                 <option v-for="icon in availableIcons" :key="icon" :value="icon"> {{ icon }}
                                 </option>
                             </select>
-                            <jet-input-error :message="form.errors.icon_name" />
+                            <jet-input-error :message="form.errors.icon_name" /> -->
                             <!-- //color -->
                             <select class="mt-5 border border-gray-600 rounded w-96" v-model="form.color">
                                 <option value="">select a icon</option>
@@ -45,6 +46,8 @@ action = route('projects.store');
                                 </option>
                             </select>
                             <jet-input-error :message="form.errors.color" />
+
+                            <input type="file" v-show="inputet" name="feature_image" class="form-control" v-on:change="onChange" ref="photo" />
 
                             <jet-button :disabled="form.processing"
                                 class="justify-center px-5 py-3 mt-5 text-sm bg-purple-400 w-96 rounded-xl">
@@ -64,12 +67,13 @@ action = route('projects.store');
                         <tr>
                             <th class="px-6 py-3 text-left">Title</th>
                             <th class="px-6 py-3 text-left">Description</th>
-                            <th class="px-6 py-3 text-left">Icon</th>
+                            <!-- <th class="px-6 py-3 text-left">Icon</th> -->
                             <th class="px-6 py-3 text-left">Color</th>
+                            <th class="px-6 py-3 text-left">image</th>
                             <th class="px-6 py-3 text-left">Actions</th>
                         </tr>
                     </thead>
-                    <tbody v-for="(project, index) in projects" :key="project.id">
+                    <tbody v-for="project in projects" :key="project.id">
                         <tr class="text-sm text-indigo-900 border-b border-gray-400">
                             <td class="px-6 py-4">
                                 {{ project.title }}
@@ -77,10 +81,10 @@ action = route('projects.store');
                             <td class="px-6 py-4">
                                 {{ project.description }}
                             </td>
-                            <td class="px-6 py-4" :class="project.color">
-                                <!-- {{ project.description }} -->
+                            <!-- <td class="px-6 py-4" :class="project.color">
+
                                 <component :is="componentName(index)"></component>
-                            </td>
+                            </td> -->
                             <!-- td -->
                             <td class="px-6 py-4">
                                 <p>
@@ -90,17 +94,21 @@ action = route('projects.store');
                                 </p>
                                 <!-- {{ skill.name }} -->
                             </td>
+                            <td class="px-6 py-4 w-52">
+                                <img :src="project.url" class="object-scale-down" alt="img-ofservice">
+                            </td>
                             <td class="px-6 py-4">
                                 <jet-button
                                     class="mr-2 text-indigo-500 border border-indigo-500 bg-indigo-50 hover:bg-indigo-100"
                                     @click="
                                         acting = true;
+                                        inputet = false;
                                         method = 'put';
                                         action = route('projects.update', [project.id])
                                         form.title = project.title;
                                         form.description = project.description;
                                         form.color = project.color;
-                                        form.icon_name = project.icon_name;
+                                        // form.icon_name = project.icon_name;
                                     ">
                                     Edit</jet-button>
                                 <jet-button class="mr-2 text-red-500 border border-red-500 bg-red-50 hover:bg-red-100"
@@ -114,7 +122,7 @@ action = route('projects.store');
                         </tr>
                     </tbody>
                 </table>
-                <div v-else class="p-3 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg mt-5">
+                <div v-else class="p-3 mt-5 text-left text-red-800 bg-red-100 border border-red-400 rounded-lg">
                     You have not created any projects yet
                 </div>
             </div>
@@ -152,14 +160,19 @@ export default {
                 )
             );
         },
+        onChange(e) {
+            const file = e.target.files[0];
+            this.form.feature_image = file;
+        },
         submit() {
             this.form.submit(this.method, this.action, {
                 onSuccess: () => {
                     this.form.reset('title');
                     this.form.reset('description');
                     this.form.reset('color');
-                    this.form.reset('icon_name');
+                    // this.form.reset('icon_name');
                     this.acting = null;
+                    this.inputet = null;
                 },
             });
         },
@@ -167,13 +180,15 @@ export default {
     data() {
         return {
             acting: null,
+            inputet: null,
             method: null,
             action: null,
             form: this.$inertia.form({
                 title: "",
                 description: "",
                 color: "",
-                icon_name: "",
+                // icon_name: "",
+                feature_image: "",
             }),
         }
     },

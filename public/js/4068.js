@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[4068],{94068:(e,a,o)=>{const{createVNode:r,openBlock:t,createBlock:n}=o(70821);e.exports=function(e,a){return t(),n("svg",{xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true"},[r("path",{d:"M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"})])}}}]);

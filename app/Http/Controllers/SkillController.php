@@ -15,10 +15,12 @@ class SkillController extends Controller
             'skills' => Skill::all(),
             'availableColors' => Skill::getAvailableBackgroundColors()
         ]);
+
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => [
                 'required',
@@ -31,7 +33,9 @@ class SkillController extends Controller
             ]
         ]);
 
-        Skill::create($request->all());
+        $skill = Skill::create($request->all());
+        $skill->addMediaFromRequest('feature_image')
+        ->toMediaCollection('service');
 
         return redirect()->route('skills.index');
     }
@@ -52,6 +56,14 @@ class SkillController extends Controller
 
         $skill->update($request->all());
 
+        if ($request->hasFile('feature_image')) {
+            $skill->media()->delete();
+            $skill->addMediaFromRequest('feature_image')
+            ->toMediaCollection();
+            // $popup->addMedia($file)->toMediaCollection('popup-icons');
+        }
+
+
         return redirect()->route('skills.index');
     }
 
@@ -61,3 +73,23 @@ class SkillController extends Controller
         return redirect()->route('skills.index');
     }
 }
+
+
+        // return Inertia::render('Skills/All', [
+        //     // 'skills' => Skill::with(['media' => function($query) {
+        //     //     dd($query->getUrl());
+        //     //     // dd($query->get('file_name'));
+        //     //     // dd($query->getRelated());
+        //     //     return $query->get('file_name');
+        //     // }])->get(),
+        //     'skills' => Skill::all(),
+        //     // 'skills' => Skill::all()->map(function($skill) {
+        //     //     dd($skill->url);
+        //     //     return [
+        //     //         // 'id' = $skill->id
+        //     //     ];
+        //     // }),
+        //     // 'skills' => Skill::with('media')->get(),
+        //     'availableColors' => Skill::getAvailableBackgroundColors()
+        //     // 'url' => Skill
+        // ]);
